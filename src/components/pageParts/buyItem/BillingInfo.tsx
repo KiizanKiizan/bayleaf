@@ -76,11 +76,7 @@ export const BillingInfo = ({
             />
             pt
           </Typography>
-          <Typography
-            className="text-right leading-5"
-            size="xs"
-            color="strong-gray"
-          >
+          <Typography className="text-right leading-5" size="xs" color="strong-gray">
             ({possesedPoint.toLocaleString()}pt利用可能)
           </Typography>
         </div>

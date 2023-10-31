@@ -66,7 +66,14 @@
       "pre-commit": "lint-staged"
     }
   },
+  "eslintConfig": {
+    "extends": [
+      "@kiizan_kiizan/eslint-config"
+    ]
+  },
   "devDependencies": {
+    "@kiizan_kiizan/eslint-config": "^0.0.7",
+    "@kiizan_kiizan/prettier-config": "^0.0.5",
     "@sentry/webpack-plugin": "^2.7.0",
     "@storybook/addon-actions": "^6.5.13",
     "@storybook/addon-essentials": "^6.5.13",
@@ -90,5 +97,6 @@
     "webpack": "^5.88.2"
   },
   "readme": "ERROR: No README data found!",
-  "_id": "bayleaf@0.1.0"
+  "_id": "bayleaf@0.1.0",
+  "prettier": "@kiizan_kiizan/prettier-config"
 }
