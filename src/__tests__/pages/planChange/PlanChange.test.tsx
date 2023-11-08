@@ -1,13 +1,9 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import { createMemoryRouter, RouterProvider } from "react-router-dom";
+import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { getChartIndexMock } from "../../../mocks/charts/getChartIndexMock";
 import { getMemberIndexMock } from "../../../mocks/members/getMemberIndexMock";
 import { server } from "../../../mocks/server";
-import {
-  LIGHT_PLAN,
-  M_PLAN_IDS,
-  PREMIUM_PLAN,
-} from "../../../models/shared/Plans";
+import { LIGHT_PLAN, M_PLAN_IDS, PREMIUM_PLAN } from "../../../models/shared/Plans";
 import { PlanChange } from "../../../pages/planChange/PlanChange";
 import { createQueryWrapper } from "../../utils/MockProvider";
 
@@ -20,7 +16,7 @@ const router = createMemoryRouter(
       element: <PlanChange />,
     },
   ],
-  { initialEntries: ["/plan_change"] }
+  { initialEntries: ["/plan_change"] },
 );
 
 describe("PlanChange.tsx", () => {
@@ -45,15 +41,13 @@ describe("PlanChange.tsx", () => {
             point: 2000,
           },
         ],
-      })
+      }),
     );
     render(<RouterProvider router={router} />, {
       wrapper: queryWrapper,
     });
 
-    expect(
-      await screen.findByTestId("PlanSelectingForPreMemberContainer")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("PlanSelectingForPreMemberContainer")).toBeInTheDocument();
   });
 
   test("二回目以降ユーザーの場合、PlanSelectingContainerに遷移", async () => {
@@ -77,15 +71,13 @@ describe("PlanChange.tsx", () => {
             point: 2000,
           },
         ],
-      })
+      }),
     );
     render(<RouterProvider router={router} />, {
       wrapper: queryWrapper,
     });
 
-    expect(
-      await screen.findByTestId("PlanSelectingContainer")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("PlanSelectingContainer")).toBeInTheDocument();
   });
 
   test("UWearレンタル中ユーザーの場合、PlanSelectingContainerに遷移", async () => {
@@ -106,7 +98,7 @@ describe("PlanChange.tsx", () => {
             },
           ],
         },
-      })
+      }),
     );
     server.use(
       getMemberIndexMock({
@@ -127,14 +119,12 @@ describe("PlanChange.tsx", () => {
             point: 2000,
           },
         ],
-      })
+      }),
     );
     render(<RouterProvider router={router} />, {
       wrapper: queryWrapper,
     });
-    expect(
-      await screen.findByTestId("PlanSelectingContainer")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("PlanSelectingContainer")).toBeInTheDocument();
   });
 
   test("初回ユーザーでレンタル中の場合、PlanSelectingContainerに遷移", async () => {
@@ -155,7 +145,7 @@ describe("PlanChange.tsx", () => {
             },
           ],
         },
-      })
+      }),
     );
     server.use(
       getMemberIndexMock({
@@ -176,15 +166,13 @@ describe("PlanChange.tsx", () => {
             point: 2000,
           },
         ],
-      })
+      }),
     );
     render(<RouterProvider router={router} />, {
       wrapper: queryWrapper,
     });
 
-    expect(
-      await screen.findByTestId("PlanSelectingContainer")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("PlanSelectingContainer")).toBeInTheDocument();
   });
 
   test("ユーザーが複数いる場合、バリデーションをする", async () => {
@@ -222,7 +210,7 @@ describe("PlanChange.tsx", () => {
             point: 2000,
           },
         ],
-      })
+      }),
     );
     render(<RouterProvider router={router} />, {
       wrapper: queryWrapper,
@@ -249,7 +237,7 @@ describe("PlanChange.tsx", () => {
             },
           ],
         },
-      })
+      }),
     );
     server.use(
       getMemberIndexMock({
@@ -270,15 +258,13 @@ describe("PlanChange.tsx", () => {
             point: 2000,
           },
         ],
-      })
+      }),
     );
     render(<RouterProvider router={router} />, {
       wrapper: queryWrapper,
     });
 
-    expect(
-      await screen.findByTestId("isStatusNotRentable")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("isStatusNotRentable")).toBeInTheDocument();
   });
 
   test("初回ユーザーでコーデ登録待ちの場合、バリデーションメッセージを表示する", async () => {
@@ -299,7 +285,7 @@ describe("PlanChange.tsx", () => {
             },
           ],
         },
-      })
+      }),
     );
     server.use(
       getMemberIndexMock({
@@ -320,14 +306,12 @@ describe("PlanChange.tsx", () => {
             point: 2000,
           },
         ],
-      })
+      }),
     );
     render(<RouterProvider router={router} />, {
       wrapper: queryWrapper,
     });
-    expect(
-      await screen.findByTestId("isFirstUserPreparingCoordinate")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("isFirstUserPreparingCoordinate")).toBeInTheDocument();
   });
 
   test("GET /chartsが500エラーの場合、バリデーションをする", async () => {
@@ -336,9 +320,7 @@ describe("PlanChange.tsx", () => {
     render(<RouterProvider router={router} />, {
       wrapper: queryWrapper,
     });
-    expect(
-      await screen.findByText("予期せぬエラーが発生しました")
-    ).toBeInTheDocument();
+    expect(await screen.findByText("予期せぬエラーが発生しました")).toBeInTheDocument();
   });
 
   test("GET /membersが500エラーの場合、バリデーションをする", async () => {
@@ -347,9 +329,7 @@ describe("PlanChange.tsx", () => {
     render(<RouterProvider router={router} />, {
       wrapper: queryWrapper,
     });
-    expect(
-      await screen.findByText("予期せぬエラーが発生しました")
-    ).toBeInTheDocument();
+    expect(await screen.findByText("予期せぬエラーが発生しました")).toBeInTheDocument();
   });
 
   test("GET /membersとGET /charts両方500エラーの場合、バリデーションをする", async () => {
@@ -358,9 +338,7 @@ describe("PlanChange.tsx", () => {
     render(<RouterProvider router={router} />, {
       wrapper: queryWrapper,
     });
-    expect(
-      await screen.findByText("予期せぬエラーが発生しました")
-    ).toBeInTheDocument();
+    expect(await screen.findByText("予期せぬエラーが発生しました")).toBeInTheDocument();
   });
 
   test("決済エラー停止ユーザーの場合、バリデーションメッセージを表示する", async () => {
@@ -384,7 +362,7 @@ describe("PlanChange.tsx", () => {
             point: 2000,
           },
         ],
-      })
+      }),
     );
     render(<RouterProvider router={router} />, {
       wrapper: queryWrapper,
@@ -416,7 +394,7 @@ describe("PlanChange.tsx", () => {
             point: 2000,
           },
         ],
-      })
+      }),
     );
     render(<RouterProvider router={router} />, {
       wrapper: queryWrapper,

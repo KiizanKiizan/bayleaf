@@ -1,4 +1,4 @@
-import { rest } from "msw";
+import { http } from "msw";
 import { THearingFormShowResponse } from "../../api/hearingForms/THearingFormShowResponse";
 
 type TProps = {
@@ -7,15 +7,11 @@ type TProps = {
   hearingFormId: number;
 };
 
-export const getHearingFormShowMock = ({
-  status,
-  response,
-  hearingFormId,
-}: TProps) => {
-  return rest.get(
-    `${process.env.REACT_APP_HOST_URL}/leeaf/hearing_forms/${hearingFormId}`,
-    (_req, res, ctx) => {
-      return res(ctx.status(status), ctx.json(response));
-    }
-  );
+export const getHearingFormShowMock = ({ status, response, hearingFormId }: TProps) => {
+  return http.get(`${process.env.REACT_APP_HOST_URL}/leeaf/hearing_forms/${hearingFormId}`, () => {
+    return new Response(JSON.stringify(response), {
+      status: status,
+      headers: { "Content-Type": "application/json" },
+    });
+  });
 };

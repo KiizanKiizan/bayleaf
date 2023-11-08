@@ -1,4 +1,4 @@
-import { rest } from "msw";
+import { http } from "msw";
 import { TChartIndexResponse } from "../../api/charts/TChartIndexResponse";
 
 type TProps = {
@@ -7,10 +7,10 @@ type TProps = {
 };
 
 export const getChartIndexMock = ({ status, response }: TProps) => {
-  return rest.get(
-    `${process.env.REACT_APP_HOST_URL}/leeaf/charts`,
-    (req, res, ctx) => {
-      return res.once(ctx.status(status), ctx.json(response));
-    }
-  );
+  return http.get(`${process.env.REACT_APP_HOST_URL}/leeaf/charts`, () => {
+    return new Response(JSON.stringify(response), {
+      status: status,
+      headers: { "Content-Type": "application/json" },
+    });
+  });
 };

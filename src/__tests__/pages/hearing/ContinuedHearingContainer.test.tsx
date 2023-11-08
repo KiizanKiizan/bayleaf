@@ -11,11 +11,7 @@ import { ContinuedHearingContainer } from "../../../pages/hearing/ContinuedHeari
 import { createQueryWrapper } from "../../utils/MockProvider";
 
 const { queryWrapper: QueryWrapper } = createQueryWrapper();
-const AllTheProviders = ({
-  children,
-}: {
-  children: React.ReactElement;
-}): ReactElement => {
+const AllTheProviders = ({ children }: { children: React.ReactElement }): ReactElement => {
   return (
     <BrowserRouter>
       <QueryWrapper>{children}</QueryWrapper>
@@ -113,12 +109,6 @@ const createHearingFormResponse = {
 };
 
 describe("ContinuedHearingContainer.tsx", () => {
-  beforeEach(() => {
-    // setTimeoutを無効化する
-    jest.useFakeTimers();
-    jest.runAllTimers();
-  });
-
   test("ライトプランで全てのヒアリングに回答し終えたら、RankSelectingFormが表示される", async () => {
     // Arrange
     server.use(
@@ -126,7 +116,7 @@ describe("ContinuedHearingContainer.tsx", () => {
         status: 200,
         hearingFormId: 1,
         response: createHearingFormResponse,
-      })
+      }),
     );
     const user = userEvent.setup();
 
@@ -138,19 +128,15 @@ describe("ContinuedHearingContainer.tsx", () => {
       />,
       {
         wrapper: AllTheProviders,
-      }
+      },
     );
 
     // 最初のレンダリングで、「ヒアリングスタート画面」が表示される
-    expect(
-      await screen.findByTestId("beforeHearingConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("beforeHearingConfirm")).toBeInTheDocument();
     user.click(await screen.findByTestId("startHearingLabel"));
 
     // ヒアリングに進むをクリックしたら、「前回のヒアリング画面」が表示される
-    expect(
-      await screen.findByTestId("hearingAnswerConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("hearingAnswerConfirm")).toBeInTheDocument();
 
     // ヒアリングを開始するをクリックしたら、ヒアリングが一つ回答されてランク選択画面が表示される
     user.click(await screen.findByTestId("startHearingBtnLabel"));
@@ -160,14 +146,12 @@ describe("ContinuedHearingContainer.tsx", () => {
       () => {
         expect(screen.getByTestId("rankSelectingForm")).toBeInTheDocument();
       },
-      { timeout: 2000 }
+      { timeout: 2000 },
     );
 
     // ランク選択画面でAランクを選択したら、ヒアリング確認画面が表示される
     user.click(await screen.findByText("Aランクでコーデを作ってほしい"));
-    expect(
-      await screen.findByTestId("hearingAnswerConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("hearingAnswerConfirm")).toBeInTheDocument();
     expect(await screen.findByText("希望しない")).toBeInTheDocument();
 
     // ひとつ前に戻るをクリックしたら、ランク選択画面が表示される
@@ -182,7 +166,7 @@ describe("ContinuedHearingContainer.tsx", () => {
         status: 200,
         hearingFormId: 1,
         response: createHearingFormResponse,
-      })
+      }),
     );
     const user = userEvent.setup();
 
@@ -194,19 +178,15 @@ describe("ContinuedHearingContainer.tsx", () => {
       />,
       {
         wrapper: AllTheProviders,
-      }
+      },
     );
 
     // 最初のレンダリングで、「ヒアリングスタート画面」が表示される
-    expect(
-      await screen.findByTestId("beforeHearingConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("beforeHearingConfirm")).toBeInTheDocument();
     user.click(await screen.findByTestId("startHearingLabel"));
 
     // ヒアリングに進むをクリックしたら、「前回のヒアリング画面」が表示される
-    expect(
-      await screen.findByTestId("hearingAnswerConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("hearingAnswerConfirm")).toBeInTheDocument();
 
     // ヒアリングを開始するをクリックしたら、ヒアリングが一つ回答されてランク選択画面が表示される
     user.click(await screen.findByTestId("startHearingBtnLabel"));
@@ -216,14 +196,12 @@ describe("ContinuedHearingContainer.tsx", () => {
       () => {
         expect(screen.getByTestId("rankSelectingForm")).toBeInTheDocument();
       },
-      { timeout: 2000 }
+      { timeout: 2000 },
     );
 
     // ランク選択画面でAランクを選択したら、ヒアリング確認画面が表示される
     user.click(await screen.findByText("Aランクでコーデを作ってほしい"));
-    expect(
-      await screen.findByTestId("hearingAnswerConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("hearingAnswerConfirm")).toBeInTheDocument();
     expect(await screen.findByText("希望しない")).toBeInTheDocument();
 
     // ひとつ前に戻るをクリックしたら、ランク選択画面が表示される
@@ -238,7 +216,7 @@ describe("ContinuedHearingContainer.tsx", () => {
         status: 200,
         hearingFormId: 1,
         response: createHearingFormResponse,
-      })
+      }),
     );
     const user = userEvent.setup();
 
@@ -250,19 +228,15 @@ describe("ContinuedHearingContainer.tsx", () => {
       />,
       {
         wrapper: AllTheProviders,
-      }
+      },
     );
 
     // 最初のレンダリングで、「ヒアリングスタート画面」が表示される
-    expect(
-      await screen.findByTestId("beforeHearingConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("beforeHearingConfirm")).toBeInTheDocument();
     user.click(await screen.findByTestId("startHearingLabel"));
 
     // ヒアリングに進むをクリックしたら、「前回のヒアリング画面」が表示される
-    expect(
-      await screen.findByTestId("hearingAnswerConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("hearingAnswerConfirm")).toBeInTheDocument();
 
     // 「前回と同じ内容でコーデを作る」をクリックしたら、ランク選択画面が表示される
     user.click(await screen.findByTestId("sameHearingBtnLabel"));
@@ -270,9 +244,7 @@ describe("ContinuedHearingContainer.tsx", () => {
 
     // ランク選択画面でAランクを選択したら、ヒアリング確認画面が表示される
     user.click(await screen.findByText("Aランクでコーデを作ってほしい"));
-    expect(
-      await screen.findByTestId("hearingAnswerConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("hearingAnswerConfirm")).toBeInTheDocument();
     expect(await screen.findByText("希望しない")).toBeInTheDocument();
 
     // ひとつ前に戻るをクリックしたら、ランク選択画面が表示される
@@ -287,7 +259,7 @@ describe("ContinuedHearingContainer.tsx", () => {
         status: 200,
         hearingFormId: 1,
         response: createHearingFormResponse,
-      })
+      }),
     );
     const user = userEvent.setup();
 
@@ -299,19 +271,15 @@ describe("ContinuedHearingContainer.tsx", () => {
       />,
       {
         wrapper: AllTheProviders,
-      }
+      },
     );
 
     // 最初のレンダリングで、「ヒアリングスタート画面」が表示される
-    expect(
-      await screen.findByTestId("beforeHearingConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("beforeHearingConfirm")).toBeInTheDocument();
     user.click(await screen.findByTestId("startHearingLabel"));
 
     // ヒアリングに進むをクリックしたら、「前回のヒアリング画面」が表示される
-    expect(
-      await screen.findByTestId("hearingAnswerConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("hearingAnswerConfirm")).toBeInTheDocument();
 
     // ヒアリングを開始するをクリックしたら、ヒアリングが一つ回答されて二つ目の選択画面が表示される
     user.click(await screen.findByTestId("startHearingBtnLabel"));
@@ -321,14 +289,12 @@ describe("ContinuedHearingContainer.tsx", () => {
       () => {
         expect(screen.getByTestId("premiumPlanConfirm")).toBeInTheDocument();
       },
-      { timeout: 2000 }
+      { timeout: 2000 },
     );
 
     // 二度目のヒアリングに進むをクリックしたら、「前回のヒアリング画面」が表示される
     user.click(await screen.findByTestId("nextHearingLabel"));
-    expect(
-      await screen.findByTestId("hearingAnswerConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("hearingAnswerConfirm")).toBeInTheDocument();
 
     // ヒアリングを開始するをクリックしたら、ヒアリングが一つ回答されてランク選択画面が表示される
     user.click(await screen.findByTestId("startHearingBtnLabel"));
@@ -338,14 +304,12 @@ describe("ContinuedHearingContainer.tsx", () => {
       () => {
         expect(screen.getByTestId("rankSelectingForm")).toBeInTheDocument();
       },
-      { timeout: 2000 }
+      { timeout: 2000 },
     );
 
     // ランク選択画面でAランクを選択したら、ヒアリング確認画面が表示される
     user.click(await screen.findByText("Aランクでコーデを作ってほしい"));
-    expect(
-      await screen.findByTestId("hearingAnswerConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("hearingAnswerConfirm")).toBeInTheDocument();
     expect(await screen.findByText("希望しない")).toBeInTheDocument();
 
     // ひとつ前に戻るをクリックしたら、ランク選択画面が表示される
@@ -360,7 +324,7 @@ describe("ContinuedHearingContainer.tsx", () => {
         status: 200,
         hearingFormId: 1,
         response: createHearingFormResponse,
-      })
+      }),
     );
     const user = userEvent.setup();
 
@@ -372,19 +336,15 @@ describe("ContinuedHearingContainer.tsx", () => {
       />,
       {
         wrapper: AllTheProviders,
-      }
+      },
     );
 
     // 最初のレンダリングで、「ヒアリングスタート画面」が表示される
-    expect(
-      await screen.findByTestId("beforeHearingConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("beforeHearingConfirm")).toBeInTheDocument();
     user.click(await screen.findByTestId("startHearingLabel"));
 
     // ヒアリングに進むをクリックしたら、「前回のヒアリング画面」が表示される
-    expect(
-      await screen.findByTestId("hearingAnswerConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("hearingAnswerConfirm")).toBeInTheDocument();
 
     // 「前回と同じ内容でコーデを作る」をクリックしたら、二つ目の選択画面が表示される
     user.click(await screen.findByTestId("sameHearingBtnLabel"));
@@ -392,9 +352,7 @@ describe("ContinuedHearingContainer.tsx", () => {
 
     // 二度目のヒアリングに進むをクリックしたら、「前回のヒアリング画面」が表示される
     user.click(await screen.findByTestId("nextHearingLabel"));
-    expect(
-      await screen.findByTestId("hearingAnswerConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("hearingAnswerConfirm")).toBeInTheDocument();
 
     // 「前回と同じ内容でコーデを作る」をクリックしたら、ランク選択画面が表示される
     user.click(await screen.findByTestId("sameHearingBtnLabel"));
@@ -402,9 +360,7 @@ describe("ContinuedHearingContainer.tsx", () => {
 
     // ランク選択画面でAランクを選択したら、ヒアリング確認画面が表示される
     user.click(await screen.findByText("Aランクでコーデを作ってほしい"));
-    expect(
-      await screen.findByTestId("hearingAnswerConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("hearingAnswerConfirm")).toBeInTheDocument();
     expect(await screen.findByText("希望しない")).toBeInTheDocument();
 
     // ひとつ前に戻るをクリックしたら、ランク選択画面が表示される
@@ -419,7 +375,7 @@ describe("ContinuedHearingContainer.tsx", () => {
         status: 200,
         hearingFormId: 1,
         response: createHearingFormResponse,
-      })
+      }),
     );
     const user = userEvent.setup();
 
@@ -431,19 +387,15 @@ describe("ContinuedHearingContainer.tsx", () => {
       />,
       {
         wrapper: AllTheProviders,
-      }
+      },
     );
 
     // 最初のレンダリングで、「ヒアリングスタート画面」が表示される
-    expect(
-      await screen.findByTestId("beforeHearingConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("beforeHearingConfirm")).toBeInTheDocument();
     user.click(await screen.findByTestId("startHearingLabel"));
 
     // ヒアリングに進むをクリックしたら、「前回のヒアリング画面」が表示される
-    expect(
-      await screen.findByTestId("hearingAnswerConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("hearingAnswerConfirm")).toBeInTheDocument();
 
     // ヒアリングを開始するをクリックしたら、ヒアリングが一つ回答されてランク選択画面が表示される
     user.click(await screen.findByTestId("startHearingBtnLabel"));
@@ -453,7 +405,7 @@ describe("ContinuedHearingContainer.tsx", () => {
       () => {
         expect(screen.getByTestId("rankSelectingForm")).toBeInTheDocument();
       },
-      { timeout: 2000 }
+      { timeout: 2000 },
     );
 
     // ランク選択画面でBランク可を選択したら、ヒアリング確認画面が表示される
@@ -465,9 +417,7 @@ describe("ContinuedHearingContainer.tsx", () => {
     };
     user.click(await screen.findByText(textMatcher));
     expect(await screen.findByTestId("rankSelectingForm")).toBeInTheDocument();
-    expect(
-      await screen.findByTestId("hearingAnswerConfirm")
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId("hearingAnswerConfirm")).toBeInTheDocument();
     expect(await screen.findByText("希望する")).toBeInTheDocument();
   });
 });
