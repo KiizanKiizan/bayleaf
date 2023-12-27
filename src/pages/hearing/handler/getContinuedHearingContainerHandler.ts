@@ -13,26 +13,6 @@ import {
 import { M_PLAN_IDS } from "../../../models/shared/Plans";
 import { AnsweredHearings, TAnsweredForm } from "../HearingContainer";
 
-type TAfterSecondHearingContainerHandler = {
-  readonly handleClickFormStart: () => void;
-  readonly handleClickHearingStart: () => void;
-  readonly getPreviousAnswers: () => THearingAnswer[];
-  readonly handleClickBack: () => void;
-  readonly handleCancelForm: () => void;
-  readonly handleClickPremiumNext: () => void;
-  readonly handleCancelPremiumNext: () => void;
-  readonly getAnsweredHearings: () => AnsweredHearings;
-  readonly handleSubmitForm: (
-    answer: TAnsweredForm,
-    nextFormIdArg: number | null
-  ) => void;
-  readonly handlePost: () => void;
-  readonly getConfirmAnswers: () => THearingAnswer[];
-  readonly handleClickSameHearing: () => void;
-  readonly shouldAnswerTwo: () => boolean;
-  readonly isAnsweredAll: () => boolean;
-};
-
 type TArgs = {
   readonly member: TMembersIndexResponse;
   readonly hearings: THearing[];
@@ -73,7 +53,7 @@ export const getContinuedHearingContainerHandler = ({
   setCurrentAnswerNumber,
   setIsHearingStarted,
   mutate,
-}: TArgs): TAfterSecondHearingContainerHandler => {
+}: TArgs) => {
   const handleClickFormStart = () => {
     setNextFormId(HEARING_FORM.FIRST);
   };
@@ -137,6 +117,7 @@ export const getContinuedHearingContainerHandler = ({
         if (hearings.sameCoordinateId) {
           return {
             sameCoordinateId: hearings.sameCoordinateId,
+            isDifferentColor: hearings.isDifferentColor,
           };
         } else if (hearings.forms.length > 0) {
           return {
@@ -246,15 +227,17 @@ export const getContinuedHearingContainerHandler = ({
     }, []);
   };
 
-  const handleClickSameHearing = () => {
+  const handleClickSameHearing = (isDifferentColor: boolean) => {
     if (currentAnswerNumber === 1) {
       setFirstAnsweredHearings({
         sameCoordinateId: hearings[0].coordinateId,
+        isDifferentColor, 
         forms: [],
       });
     } else {
       setSecondAnsweredHearings({
         sameCoordinateId: hearings[1].coordinateId,
+        isDifferentColor,
         forms: [],
       });
     }

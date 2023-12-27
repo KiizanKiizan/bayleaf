@@ -11,7 +11,7 @@ type TProps = {
     nextFormIdArg: number | null
   ) => void;
   readonly onCancelForm: () => void;
-  readonly onClickSameHearing: () => void;
+  readonly onClickSameHearing: (isDifferentColor: boolean) => void;
   readonly onClickStart: () => void;
   readonly onClickBack: () => void;
   readonly confirmAnswers: THearingAnswer[];
@@ -53,10 +53,15 @@ export const HearingFlowContainer = ({
               </Button>
               <Button
                 variant="default"
-                onClick={onClickSameHearing}
-                dataTestId="sameHearingBtnLabel"
+                onClick={() => onClickSameHearing(false)}
               >
-                前回と同じ内容でコーデを作る
+                前回と同じシーンで色味はそのままコーデを作る
+              </Button>
+              <Button
+                variant="default"
+                onClick={() => onClickSameHearing(true)}
+              >
+                前回と同じシーンで色味は変えてコーデを作る
               </Button>
               {currentAnswerNumber === 2 && (
                 <Button variant="line" onClick={onClickBack}>

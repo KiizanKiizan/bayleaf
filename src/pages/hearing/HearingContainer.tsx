@@ -22,6 +22,7 @@ export type TAnsweredForm = {
 export type AnsweredHearings = {
   readonly sameCoordinateId?: number;
   readonly forms: TAnsweredForm[];
+  readonly isDifferentColor?: boolean;
 };
 
 export const HearingContainer = ({ member, hearings }: TProps) => {
